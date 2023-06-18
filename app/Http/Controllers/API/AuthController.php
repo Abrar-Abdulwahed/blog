@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use Validator;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
@@ -29,6 +30,10 @@ class AuthController extends BaseController
         $user = User::create($input);
         $success['token'] =  $user->createToken('blogToken')->plainTextToken;
         $success['type'] =  'bearer';
+        $success['name'] = $user->name;
+        $success['email'] = $user->email;
+        $success['password'] = $input['password'];
+        $success['bod'] = $user->bod;
    
         return $this->sendResponse($success, 'User register successfully.');
     }
